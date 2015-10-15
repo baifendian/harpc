@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+	<thrift>
+		<!-- thrift server conn -->
+		<connect>127.0.0.1:11212,127.0.0.1:11213</connect>
+		<connTimeOut>500</connTimeOut>
+		<sendTimeOut>400</sendTimeOut>
+		<recvTimeOut>400</recvTimeOut>
+	</thrift>
+	<threshold>
+		<!-- client max pool size for every ip,port pair -->
+		<maxPoolSize>50</maxPoolSize>
+		<!-- init pool size for every ip,port pair -->
+		<initPoolSize>10</initPoolSize>
+		<!-- check every #checkTimes seconds for the bad ds. -->
+		<checkInterval>15</checkInterval>
+		<!-- not used, just ommit it -->
+		<checkNoOpenInterval>7200</checkNoOpenInterval>
+	</threshold>
+</configuration>

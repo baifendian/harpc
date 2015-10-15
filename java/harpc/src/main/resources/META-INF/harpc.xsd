@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://code.baifendian.com/schema/harpc" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://code.baifendian.com/schema/harpc">
+	<!-- 重要约定：所有属性名首字母必须小写，且区分大小写 -->
+	<xsd:element name="server" type="serverType">
+	</xsd:element>
+
+	<xsd:complexType name="serverType">
+		<xsd:attribute name="id" type="xsd:ID"></xsd:attribute>
+		<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="owner" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="service" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="ref" type="xsd:IDREF"></xsd:attribute>
+		<xsd:attribute name="port" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="protocol" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="weight" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="ip" type="xsd:string"></xsd:attribute>
+		
+		<xsd:attribute name="monitor" type="xsd:boolean"></xsd:attribute>
+		<xsd:attribute name="interval" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="maxWorkerThreads" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="minWorkerThreads" type="xsd:int"></xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:element name="registry" type="registryType">
+	</xsd:element>
+
+	<xsd:complexType name="registryType">
+		<xsd:attribute name="id" type="xsd:ID"></xsd:attribute>
+		<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="connectstr" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="auth" type="xsd:string"></xsd:attribute>
+	</xsd:complexType>
+	
+	<xsd:element name="client" type="clientType">
+	</xsd:element>
+
+	<xsd:complexType name="clientType">
+		<xsd:attribute name="id" type="xsd:ID"></xsd:attribute>
+		<xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="owner" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="service" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="protocol" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="address" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="retry" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="iface" type="xsd:string"></xsd:attribute>
+		<xsd:attribute name="monitor" type="xsd:boolean"></xsd:attribute>
+		<xsd:attribute name="interval" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="loadbalance" type="xsd:string"></xsd:attribute>
+		
+		<xsd:attribute name="timeout" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="maxActive" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="maxIdle" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="minIdle" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="maxWait" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="timeBetweenEvictionRunsMillis" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="testWhileIdle" type="xsd:boolean"></xsd:attribute>
+		
+		<xsd:attribute name="heartbeat" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="heartbeatTimeout" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="heartbeatTimes" type="xsd:int"></xsd:attribute>
+		<xsd:attribute name="heartbeatInterval" type="xsd:int"></xsd:attribute>
+	</xsd:complexType>
+</xsd:schema>

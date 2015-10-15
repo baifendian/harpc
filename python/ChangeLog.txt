@@ -1,0 +1,5 @@
+# harpc-python changelog
+
+## 2015-10-10 1.2
+
+* First public version.

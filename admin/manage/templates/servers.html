@@ -1,0 +1,562 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+{% block css_content %}
+    <link rel="stylesheet" type="text/css" media="all" href="{% static "daterangepicker/daterangepicker-bs3.css" %}"/>
+    {#    <style type="text/css">#}
+    {#        .modal .modal-dialog {#}
+    {#            width: 80%;#}
+    {#        }#}
+    {#    </style>#}
+    <style type="text/css">
+        #harpc_log .modal-body {
+            height: 500px;
+            overflow: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block page_content %}
+    {% if isExists %}
+        <div class="container-fluid main-content">
+            <div class="page-title">
+                <h1>
+                    servers
+                </h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="{% url "manage.views.service" %}"></a><i class="icon-home"></i>
+                        </li>
+                        <li>
+                            <a href="{% url "manage.views.service" %}">{{ service }}</a>
+                        </li>
+                        <li class="active">
+                            servers
+                        </li>
+                    </ul>
+                    <div class="profile-stats">
+                        <div class="col-xs-2">
+                            <a href="#">
+                                <h2>
+                                    3405
+                                </h2>
+                            </a>
+
+                            <p>
+                                平均响应时间(ms)
+                            </p>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="#">
+                                <h2>
+                                    1002
+                                </h2>
+                            </a>
+
+                            <p>
+                                最大响应时间(ms)
+                            </p>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="#">
+                                <h2>
+                                    7012
+                                </h2>
+                            </a>
+
+                            <p>
+                                最小响应时间
+                            </p>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="#">
+                                <h2>
+                                    0.39848575
+                                </h2>
+                            </a>
+
+                            <p>
+                                平均访问次数
+                            </p>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="#">
+                                <h2>
+                                    4
+                                </h2>
+                            </a>
+
+                            <p>
+                                成功次数
+                            </p>
+                        </div>
+                        <div class="col-xs-2">
+                            <a href="#">
+                                <h2>
+                                    0
+                                </h2>
+                            </a>
+
+                            <p>
+                                失败次数
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="widget-container fluid-height clearfix">
+                        <div class="heading">
+                            <i class="icon-table"></i>service列表{% if isOperate %}<a id="addServerBtn"
+                                                                                    class="btn btn-sm btn-primary-outline pull-right"
+                                ><i class="icon-plus"></i>增加 server</a>{% endif %}
+                        </div>
+                        <div class="widget-content padded clearfix">
+                            <table class="table table-bordered table-striped"
+                                   style="word-wrap: break-word;word-break: break-all;" id="servers-table">
+                                <thead>
+                                <th>
+                                    server
+                                </th>
+                                <th>
+                                    服务名
+                                </th>
+                                <th class="hidden-xs">
+                                    服务负责人
+                                </th>
+                                <th class="hidden-xs">
+                                    底层协议
+                                </th>
+                                <th class="hidden-xs">
+                                    操作
+                                </th>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addServer" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">新建service</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-warning">
+                            servers格式为：ip:port(如192.168.1.1:19090)
+                        </div>
+                        <form>
+                            <div class="form-group">
+                                <label for="recipient-name" class="control-label">service:</label>
+                                <input type="text" class="form-control" id="server">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" id="create_server" class="btn btn-primary">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="harpc_log" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" style="width: 100%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close"
+                                data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <form class="form-horizontal modal-title">
+                            <div class="input-prepend input-group">
+                    <span class="add-on input-group-addon"><i
+                            class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                                <input type="text" style="width: 400px" name="reservation"
+                                       id="reservationtime"
+                                       class="form-control"
+                                        {#                                   value="{% now "m" %}/{% now "d" %}/{% now "Y" %} {% now "h:m" %} {% now "A" %} - {% now "m" %}/{% now "d" %}/{% now "Y" %} {% now "h:m" %} {% now "A" %}"#}
+                                        {#                                   value="{{ start }} - {{ end }}"#}
+                                       class="span4"/>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-body">
+                        <table id="log_table" class="table table-striped table-bordered" cellpadding="0" cellspacing="0"
+                               class="display" border="0" style="word-wrap: break-word;word-break: break-all;"
+                               width="100%">
+                            <thead>
+                            <tr>
+                                <th>日志时间</th>
+                                <th>平均响应时间</th>
+                                <th>最小响应时间</th>
+                                <th>最大响应时间</th>
+                                <th>每秒请求次数</th>
+                                <th>成功次数</th>
+                                <th>失败次数</th>
+                            </tr>
+                            </thead>
+                        </table>
+                        <div id="log_chart"></div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default"
+                                data-dismiss="modal">关闭
+                        </button>
+                        <button type="button" class="btn btn-primary"
+                                data-dismiss="modal">
+                            确认
+                        </button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal -->
+        </div>
+    {% else %}
+        <div class="container-fluid main-content">
+            <div class="page-title">
+                <h1>
+                    servers
+                </h1>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="widget-container fluid-height clearfix">
+                        <div class="heading">
+                            <i class="icon-collapse"></i>您需要选择一个存在的并有效service，才能查看其中的servers
+                        </div>
+                        <div class="widget-content padded">
+                            <form action="{% url "manage.views.servers" %}" class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="control-label col-md-2">service</label>
+
+                                    <div class="col-md-7">
+                                        <select class="select2able" name="service">
+                                            {% for service in services %}
+                                                <option value="{{ service.0 }}">{{ service.0 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-2"> </label>
+
+                                    <div class="col-md-7">
+                                        <button class="btn btn-primary" type="submit">确认</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block js_content %}
+    {% if isExists %}
+        <script src="{% static "daterangepicker/moment.js" %}" type="text/javascript"></script>
+        <script src="{% static "daterangepicker/daterangepicker.js" %}" type="text/javascript"></script>
+        <script type="text/javascript" src="{% static "layer/layer.js" %}"></script>
+        <script type="text/javascript" src="{% static "highchart/highcharts.js" %}"></script>
+        <script type="text/javascript" src="{% static "highchart/modules/exporting.js" %}"></script>
+        <script type="text/javascript" src="{% static "js/moment.js" %}"></script>
+        <script type="text/javascript">
+            var serversTable = $("#servers-table").DataTable({
+                "sPaginationType": "full_numbers",
+                "language": {
+                    url: "{% static 'datatable/Chinese.json' %}"
+                },
+                "ajax": {
+                    url: "{% url 'manage.views.ajax_servers' %}",
+                    type: "POST",
+                    data: {
+                        'service': '{{ service }}'
+                    }
+                },
+                "columns": [
+                    {
+                        "sWidth": "20%"
+                    },
+                    {"sWidth": "20%"},
+                    {"sWidth": "20%"},
+                    {"sWidth": "20%"},
+                    {"sWidth": "20%"},
+                ],
+                "columnDefs": [
+                    {
+                        "render": function (data, type, row) {
+                            if (data == true) {
+                                return '<div class="action-buttons">' +
+                                        '<a class="table-actions" onclick="log(\'{{ service }}\',\'servers\',\'' + row[0] + '\')" style=\"cursor:pointer;\" ><i class="icon-eye-open"></i></a>' +
+                                        '<a class="table-actions" onclick="delete_server(\'{{ service }}\',\'' + row[0] + '\')" style=\"cursor:pointer;\" ><i class="icon-trash"></i></a>' +
+                                        '</div>';
+                            } else {
+                                return '<div class="action-buttons">' +
+                                        '<a class="table-actions" onclick="log(\'{{ service }}\',\'servers\',\'' + row[0] + '\')" style=\"cursor:pointer;\" ><i class="icon-eye-open"></i></a>' +
+                                        '</div>';
+                                ;
+                            }
+                        },
+                        "targets": 4
+                    },
+                ]
+            });
+
+            $("#addServerBtn").click(function () {
+                $("#server").val("");
+                $('#addServer').modal('show');
+            });
+
+            $("#create_server").click(function () {
+                var index = layer.load(1, {
+                    shade: [0.1, '#fff'] //0.1透明度的白色背景
+                });
+
+                $.ajax({
+                    url: '{% url "manage.views.ajax_create_server" %}',
+                    method: 'POST',
+                    data: {
+                        'service': '{{ service }}',
+                        'server': $("#server").val()
+                    },
+                    success: function (data) {
+                        //layer.msg(data['msg'], {icon: 2});
+                        if (data['rc'] == 0) {
+                            $('#addServer').modal('hide')
+                            layer.msg(data['msg'], {icon: 1});
+                            //window.location.replace("{% url 'manage.views.index' %}?msg=节点添加成功!");
+                            serversTable.ajax.reload()
+                        } else {
+                            layer.msg(data['msg'], {icon: 2});
+
+                        }
+                        layer.close(index);
+                    },
+                    error: function () {
+                        layer.msg('服务器内部异常', {icon: 2});
+                        layer.close(index);
+                    }
+                });
+            });
+
+            function delete_server(service, server) {
+                layer.confirm('是否删除' + server + '节点？', {
+                    btn: ['删除', '取消'], //按钮
+                    shade: false //不显示遮罩
+                }, function () {
+                    var index = layer.load(1, {
+                        shade: [0.1, '#fff'] //0.1透明度的白色背景
+                    });
+                    $.ajax({
+                        url: '{% url 'manage.views.ajax_delete' %}',
+                        data: {
+                            'service': service,
+                            'server': server
+                        },
+                        method: 'POST',
+                        success: function (data) {
+                            //layer.msg(data['msg'], {icon: 2});
+                            if (data['rc'] == 0) {
+                                serversTable.ajax.reload()
+                                layer.msg(data['msg'], {icon: 1});
+                                //window.location.replace("{% url 'manage.views.index' %}?msg=节点删除成功!");
+                            } else {
+                                layer.msg(data['msg'], {icon: 2});
+                                layer.close(index);
+                            }
+                            layer.close(index);
+                        },
+                        error: function () {
+                            layer.msg('服务器内部异常', {icon: 2});
+                            layer.close(index);
+                        }
+                    })
+                }, function () {
+                });
+
+
+            }
+
+            var global_service;
+            var global_type;
+            var global_key;
+
+            function log(service, type, key) {
+                global_service = service;
+                global_type = type;
+                global_key = key;
+                $('#harpc_log').modal('show');
+
+            }
+            $('#harpc_log').on('shown.bs.modal', function () {
+                initdatadaterangepicker(global_service, global_key, global_type);
+                initTable(global_service, global_key, global_type, $('#reservationtime').data('daterangepicker').startDate.format('YYYYMMDDHHmmss'), $('#reservationtime').data('daterangepicker').endDate.format('YYYYMMDDHHmmss'));
+                var chart = $('#log_chart').highcharts();
+                chart.reflow();
+            })
+
+            function initdatadaterangepicker(service, key, type) {
+                $('#reservationtime').val(moment().add('days', -7).format('MM/DD/YYYY h:mm A') + " - " + moment().format('MM/DD/YYYY h:mm A'));
+                $('#reservationtime').daterangepicker({
+                    timePicker: true,
+                    timePickerIncrement: 1,
+
+                    format: 'MM/DD/YYYY h:mm A',
+                    //startDate: moment().add('days',-7).format('MM/DD/YYYY h:mm A'),
+                    //endDate: moment().format('MM/DD/YYYY h:mm A')
+                }, function (start, end, label) {
+                    initTable(service, key, type, start.format('YYYYMMDDHHmmss'), end.format('YYYYMMDDHHmmss'));
+                });
+                //$('#reservationtime').data('daterangepicker').setStartDate(moment().add('days',-7).format('MM/DD/YYYY h:mm A'));
+                //$('#reservationtime').data('daterangepicker').setEndDate(moment().format('MM/DD/YYYY h:mm A'));
+            }
+
+            var table = null;
+            function initTable(service, key, type, start, end) {
+                $.ajax({
+                    url: "{% url 'manage.views.ajax_harpc_log' %}",
+                    method: 'POST',
+                    data: {
+                        'service': service,
+                        'key': key,
+                        'type': type,
+                        'start': start,
+                        'end': end
+                    },
+                    success: function (data) {
+                        if (table != null) {
+                            table.destroy();
+                        }
+                        table = $('#log_table').DataTable({
+                            "sPaginationType": "full_numbers",
+                            language: {
+                                url: "{% static 'datatable/Chinese.json' %}"
+                            },
+                            "aaData": data['tables'],
+                            "columnDefs": [{
+                                "render": function (data, type, row) {
+                                    if (data == 'total') {
+                                        return '合计'
+                                    } else {
+{#                                        var year = Math.floor(data / 10000000000);#}
+{#                                        var month = Math.floor(Math.floor(data % 10000000000) / 100000000);#}
+{#                                        var day = Math.floor(Math.floor(data % 100000000) / 1000000);#}
+{#                                        var hour = Math.floor(Math.floor(data % 1000000) / 10000);#}
+{#                                        var min = Math.floor(Math.floor(data % 10000) / 100);#}
+{#                                        var sec = Math.floor(data % 100);#}
+{#                                        return year + '年' + month + '月' + day + '日' + '-' + hour + '时' + min + '分' + sec + '秒';#}
+                                        moment(data,'YYYYMMDDHHmmss').format('YYYY/Do/MMMM h:mm:ss a');
+                                    }
+                                    return data;
+                                },
+                                "type": "html-percent",
+                                "targets": 0
+                            }],
+                            "columns": [
+                                {
+                                    "sWidth": "15%"
+                                },
+                                {"sWidth": "15%"},
+                                {"sWidth": "15%"},
+                                {"sWidth": "15%"},
+                                {"sWidth": "15%"},
+                                {"sWidth": "15%"},
+                                {"sWidth": "10%"},
+                            ],
+                            "fnDrawCallback": function (oSettings) {
+                            },
+                            "order": [[1, "desc"]]
+
+                        });
+                        var series = data['series'];
+                        for (index in series) {
+                            var serie = series[index];
+                            var serie_datas = serie['data'];
+                            for (i in serie_datas) {
+                                var serie_data = serie_datas[i];
+                                var date = Date.UTC(serie_data[0], serie_data[1], serie_data[2], serie_data[3], serie_data[4], serie_data[5]);
+                                var value = serie_data[6];
+                                series[index]['data'][i] = [date, value];
+                            }
+                        }
+                        if (series.length > 0) {
+                            $('#log_chart').highcharts({
+                                chart: {
+                                    type: 'spline'
+                                },
+                                title: {
+                                    text: '节点日志趋势图'
+                                },
+                                subtitle: {
+                                    text: '数据来源harpc_admin'
+                                },
+                                xAxis: {
+                                    type: 'datetime',
+                                    dateTimeLabelFormats: { // don't display the dummy year
+                                        second: '%H:%M:%S',
+                                        minute: '%H:%M',
+                                        hour: '%H:%M',
+                                        day: '%e. %b',
+                                        week: '%e. %b',
+                                        month: '%b \'%y',
+                                        year: '%Y'
+                                    }
+                                },
+                                yAxis: [{
+                                    title: {
+                                        text: 'ms'
+                                    },
+                                    min: 0
+                                }, {
+                                    title: {
+                                        text: '次'
+                                    },
+                                    min: 0,
+                                    opposite: true
+                                }
+                                ],
+                                tooltip: {
+                                    formatter: function () {
+                                        return '<b>' + this.series.name + '</b><br>' +
+                                                Highcharts.dateFormat('%b/%e %H:%M:%S', this.x) + ' value= ' + this.y;
+                                    }
+                                },
+
+                                series: series
+                            });
+                            var chart = $('#log_chart').highcharts();
+                            var series_chart = chart.series;
+                            for (var i = 1, len = series_chart.length; i < len; i++) {
+                                series_chart[i].hide();
+                            }
+                        } else {
+                            $('#log_chart').empty();
+                        }
+                    },
+                    error: function () {
+                        layer.msg('服务器内部异常', {icon: 2});
+                    }
+                });
+            }
+
+        </script>
+    {% else %}
+        <script type="text/javascript">
+            $('.select2able').select2();
+        </script>
+    {% endif %}
+{% endblock %}

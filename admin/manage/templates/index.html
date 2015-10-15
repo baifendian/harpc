@@ -1,0 +1,365 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+
+{% block css_content %}
+    <link rel="stylesheet" type="text/css" media="all" href="{% static "daterangepicker/daterangepicker-bs3.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "datatable/css/dataTables.bootstrap.css" %}"/>
+    <link href="{% static "css/tree.css" %}" rel="stylesheet"/>
+    <style type="text/css">
+        .modal .modal-dialog {
+            width: 80%;
+        }
+    </style>
+{% endblock %}
+{% block page_content %}
+<div class="main">
+  <div class="main-inner">
+    <div class="container">
+        <div class="tree well">
+            <ul>
+                {% for service_key, service_value in results.items %}
+                    <li>
+                        <span><i class="icon-folder-open"></i> Service:{{ service_key.0 }}</span>{% if service_key.1 %}&nbsp;&nbsp;<a class="btn btn-danger" onclick="delete_service('{{ service_key.0 }}',null)" style="cursor:pointer;" >删除</a>{% endif %}
+                        <ul>
+                            {% for key, value in service_value.items %}
+                                <li>
+                                    <span><i class="icon-minus-sign"></i> {{ key }}</span>
+                                    <ul>
+                                        {% for val in value %}
+                                            <li>
+                                                {#                            <span><i class="icon-leaf"></i> {{ val }}</span> <a class="btn  btn-info" href="">日志</a>#}
+                                                <a style="cursor:pointer;"
+                                                   onclick="log('{{ service_key.0 }}','{{ val.0 }}','{{ key }}')"><span><i
+                                                        class="icon-leaf"></i> {{ val.0 }}</span></a>{% if val.1 %}&nbsp;&nbsp;<a class="btn btn-danger" onclick="delete_service('{{ service_key.0 }}','{{ val.0 }}')" style="cursor:pointer;" >删除</a>{% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <!-- Matter ends -->
+
+    </div>
+
+    <!-- 模态框（Modal） -->
+    <div class="modal fade" id="harpc_log" tabindex="-1" role="dialog"
+         aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                            data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <form class="form-horizontal modal-title">
+                        <div class="input-prepend input-group">
+                    <span class="add-on input-group-addon"><i
+                            class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+                            <input type="text" style="width: 400px" name="reservation"
+                                   id="reservationtime"
+                                   class="form-control"
+                                    {#                                   value="{% now "m" %}/{% now "d" %}/{% now "Y" %} {% now "h:m" %} {% now "A" %} - {% now "m" %}/{% now "d" %}/{% now "Y" %} {% now "h:m" %} {% now "A" %}"#}
+{#                                   value="{{ start }} - {{ end }}"#}
+                                   class="span4"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-body">
+                    <table id="table" class="table table-striped table-bordered" cellpadding="0" cellspacing="0"
+                           class="display" border="0" style="word-wrap: break-word;word-break: break-all;"
+                           width="100%">
+                        <thead>
+                        <tr>
+                            <th>日志时间</th>
+                            <th>平均响应时间</th>
+                            <th>最小响应时间</th>
+                            <th>最大响应时间</th>
+                            <th>每秒请求次数</th>
+                            <th>成功次数</th>
+                            <th>失败次数</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div id="container"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default"
+                            data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary"
+                            data-dismiss="modal">
+                        确认
+                    </button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal -->
+    </div>
+
+    <div class="modal fade" id="addService" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="exampleModalLabel">新建service</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-warning">
+                        servers格式为：ip:port(多个时使用“,”隔开，如192.168.1.1:19090;192.168.1.1:19090)
+                    </div>
+                    <form>
+                        <div class="form-group">
+                            <label for="recipient-name" class="control-label">service:</label>
+                            <input type="text" class="form-control" id="service">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="control-label">servers:</label>
+                            <textarea class="form-control" id="servers"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" id="create_service" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+{% block js_content %}
+    <script src="{% static "daterangepicker/moment.js" %}" type="text/javascript"></script>
+    <script src="{% static "daterangepicker/daterangepicker.js" %}" type="text/javascript"></script>
+    <script type="text/javascript" src="{% static "datatable/js/jquery.dataTables.js" %}"></script>
+    <script type="text/javascript" src="{% static "datatable/js/dataTables.bootstrap.js" %}"></script>
+    <script type="text/javascript" src="{% static "layer/layer.js" %}"></script>
+    <script type="text/javascript" src="{% static "highchart/highcharts.js" %}"></script>
+    <script type="text/javascript" src="{% static "highchart/modules/exporting.js" %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+            $('.tree li.parent_li > span').on('click', function (e) {
+                var children = $(this).parent('li.parent_li').find(' > ul > li');
+                if (children.is(":visible")) {
+                    children.hide('fast');
+                    $(this).attr('title', 'Expand this branch').find(' > i').addClass('icon-plus-sign').removeClass('icon-minus-sign');
+                } else {
+                    children.show('fast');
+                    $(this).attr('title', 'Collapse this branch').find(' > i').addClass('icon-minus-sign').removeClass('icon-plus-sign');
+                }
+                e.stopPropagation();
+            });
+        });
+
+        function log(service, key, type) {
+            $('#harpc_log').modal('show');
+            initdatadaterangepicker(service, key, type);
+            initTable(service, key, type, $('#reservationtime').data('daterangepicker').startDate.format('YYYYMMDDHHmmss'), $('#reservationtime').data('daterangepicker').endDate.format('YYYYMMDDHHmmss'));
+        }
+
+        function initdatadaterangepicker(service, key, type) {
+            $('#reservationtime').val(moment().add('days',-7).format('MM/DD/YYYY h:mm A')+" - "+moment().format('MM/DD/YYYY h:mm A'));
+            $('#reservationtime').daterangepicker({
+                timePicker: true,
+                timePickerIncrement: 1,
+
+                format: 'MM/DD/YYYY h:mm A',
+            }, function (start, end, label) {
+                initTable(service, key, type, start.format('YYYYMMDDHHmmss'), end.format('YYYYMMDDHHmmss'));
+            });
+        }
+        var table = null;
+        function initTable(service, key, type, start, end) {
+            $.ajax({
+                url:"{% url 'manage.views.ajax_harpc_log' %}",
+                method:'POST',
+                data:{
+                        'service': service,
+                        'key': key,
+                        'type': type,
+                        'start': start,
+                        'end': end
+                },
+                success:function(data){
+                    if (table != null) {
+                        table.destroy();
+                    }
+                    table = $('#table').DataTable({
+                        "sPaginationType": "full_numbers",
+                        language: {
+                            url: "{% static 'datatable/Chinese.json' %}"
+                        },
+                        "aaData" : data['tables'],
+                        "columnDefs": [{
+                            "render": function (data, type, row) {
+                                if (data == 'total') {
+                                    return '合计'
+                                } else {
+                                    var year = Math.floor(data / 10000000000);
+                                    var month = Math.floor(Math.floor(data % 10000000000) / 100000000);
+                                    var day = Math.floor(Math.floor(data % 100000000) / 1000000);
+                                    var hour = Math.floor(Math.floor(data % 1000000) / 10000);
+                                    var min = Math.floor(Math.floor(data % 10000) / 100);
+                                    var sec = Math.floor(data % 100);
+                                    return year + '年' + month + '月' + day + '日' + '-' + hour + '时' + min + '分' + sec + '秒';
+                                }
+                                return data;
+                            },
+                            "type": "html-percent",
+                            "targets": 0
+                        }],
+                        "fnDrawCallback": function (oSettings) {
+                        }
+                        //"order": [[2, "desc"]]
+
+                    });
+                    var series = data['series'];
+                    for(index in series)
+                    {
+                        var serie = series[index];
+                        var serie_datas = serie['data'];
+                        for (i in serie_datas) {
+                            var serie_data = serie_datas[i];
+                            var date = Date.UTC(serie_data[0], serie_data[1], serie_data[2], serie_data[3], serie_data[4], serie_data[5]);
+                            var value = serie_data[6];
+                            series[index]['data'][i] = [date, value];
+                        }
+                    }
+                    if(series.length>0) {
+                        $('#container').highcharts({
+                            chart: {
+                                type: 'spline'
+                            },
+                            title: {
+                                text: '节点日志趋势图'
+                            },
+                            subtitle: {
+                                text: '数据来源harpc_admin'
+                            },
+                            xAxis: {
+                                type: 'datetime',
+                                dateTimeLabelFormats: { // don't display the dummy year
+                                    second: '%H:%M:%S',
+                                    minute: '%H:%M',
+                                    hour: '%H:%M',
+                                    day: '%e. %b',
+                                    week: '%e. %b',
+                                    month: '%b \'%y',
+                                    year: '%Y'
+                                }
+                            },
+                            yAxis: [{
+                                title: {
+                                    text: 'ms'
+                                },
+                                min: 0
+                            }, {
+                                title: {
+                                    text: '次'
+                                },
+                                min: 0,
+                                opposite: true
+                            }
+                            ],
+                            tooltip: {
+                                formatter: function () {
+                                    return '<b>' + this.series.name + '</b><br>' +
+                                            Highcharts.dateFormat('%b/%e %H:%M:%S', this.x) + ' value= ' + this.y;
+                                }
+                            },
+
+                            series: series
+                        });
+                        var chart = $('#container').highcharts();
+                        var series_chart = chart.series;
+                        for(var i= 1,len = series_chart.length;i<len;i++){
+                            series_chart[i].hide();
+                        }
+                    }else{
+                        $('#container').empty();
+                    }
+                },
+                error:function(){
+                    layer.msg('服务器内部异常', {icon: 2});
+                }
+            });
+        }
+
+
+
+        $("#addServiceBtn").click(function(){
+            $('#addService').modal('show');
+        });
+
+        $("#create_service").click(function(){
+            var index = layer.load(1, {
+                shade: [0.1,'#fff'] //0.1透明度的白色背景
+            });
+            $.ajax({
+                url:'{% url 'manage.views.ajax_create_service' %}',
+                method:'POST',
+                data:{
+                    'service':$("#service").val(),
+                    'servers':$("#servers").val()
+                },
+                success:function(data){
+                    if(data['rc']==0){
+                        $('#myModal').modal('hide')
+                        window.location.replace("{% url 'manage.views.index' %}?msg=节点添加成功!");
+                    }else{
+                        layer.msg(data['msg'], {icon: 2});
+                        layer.close(index);
+                    }
+                },
+                error:function(){
+                    layer.msg('服务器内部异常', {icon: 2});
+                    layer.close(index);
+                }
+            });
+        });
+        function delete_service(service,server){
+            layer.confirm('是否删除该节点？', {
+                btn: ['删除','取消'],
+                shade: false
+            }, function(){
+                var index = layer.load(1, {
+                    shade: [0.1,'#fff']
+                });
+                $.ajax({
+                url:'{% url 'manage.views.ajax_delete' %}',
+                data:{
+                    'service':service,
+                    'server':server
+                },
+                method:'POST',
+                success:function(data){
+                    if(data['rc']==0){
+                        window.location.replace("{% url 'manage.views.index' %}?msg=节点删除成功!");
+                    }else{
+                        layer.msg(data['msg'], {icon: 2});
+                        layer.close(index);
+                    }
+                },
+                error:function(){
+                    layer.msg('服务器内部异常', {icon: 2});
+                    layer.close(index);
+                }
+            })
+            }, function(){
+            });
+
+
+        }
+    </script>
+
+
+{% endblock %}

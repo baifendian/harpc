@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+  Copyright (C) 2015 Baifendian Corporation
+ 
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.baifendian</groupId>
+	<artifactId>harpc</artifactId>
+	<version>1.2</version>
+	<name>harpc</name>
+	<description>High availability RPC framework.</description>
+
+	<organization>
+		<name>Baifendian Corporation</name>
+		<url>http://www.baifendian.com/</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<name>dsfan</name>
+			<id>dongsheng.fan</id>
+			<email>dongsheng.fan@baifendian.com</email>
+			<roles>
+				<role>Developer</role>
+			</roles>
+			<timezone>+8</timezone>
+		</developer>
+	</developers>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<thrift.version>0.9.2</thrift.version>
+		<avro.version>1.7.7</avro.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.thrift</groupId>
+			<artifactId>libthrift</artifactId>
+			<version>${thrift.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro</artifactId>
+			<version>${avro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro-ipc</artifactId>
+			<version>${avro.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.5</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>2.5.6</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>2.5.6</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>2.5.6</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>commons-logging</artifactId>
+					<groupId>commons-logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-recipes</artifactId>
+			<version>2.3.0</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>netty</artifactId>
+					<groupId>org.jboss.netty</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-pool</groupId>
+			<artifactId>commons-pool</artifactId>
+			<version>1.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.twitter.common</groupId>
+			<artifactId>quantity</artifactId>
+			<version>0.0.31</version>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.6</version>
+		</dependency>
+	</dependencies>
+
+	<!-- 如果你无法访问：”http://maven.twttr.com“，请设置maven代理 -->
+	<repositories>
+		<repository>
+			<id>maven-twitter</id>
+			<name>twitter maven repository</name>
+			<url>http://maven.twttr.com</url>
+		</repository>
+	</repositories>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+			</plugin>
+			
+			<!--  
+			<plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-shade-plugin</artifactId>
+	            <version>2.1</version>
+	            <executions>
+	                <execution>
+	                    <phase>package</phase>
+	                    <goals>
+	                        <goal>shade</goal>
+	                    </goals>
+	                    <configuration>
+	                        <shadedArtifactAttached>false</shadedArtifactAttached>
+	                        <createSourcesJar>true</createSourcesJar>
+	                        <filters>
+	                            <filter>
+	                                <artifact>*:*</artifact>
+	                                <excludes>
+	                                    <exclude>META-INF/*.SF</exclude>
+	                                    <exclude>META-INF/*.DSA</exclude>
+	                                    <exclude>META-INF/*.RSA</exclude>
+	                                </excludes>
+	                            </filter>
+                        	</filters>
+	                        <artifactSet>
+	                            <excludes>
+	                            	<exclude>org.apache.thrift:libthrift:jar:</exclude>
+	                            	<exclude>org.apache.avro:*</exclude>
+	                            	<exclude>org.springframework:*</exclude>
+	                            	<exclude>log4j:log4j</exclude>
+	                            	<exclude>org.slf4j:slf4j-api</exclude>
+	                            	<exclude>commons-lang:commons-lang</exclude>
+	                            	<exclude>commons-pool:commons-pool</exclude>
+	                            	<exclude>com.twitter.common:*</exclude>
+	                            	<exclude>com.alibaba:fastjson</exclude>
+	                            </excludes>
+	                        </artifactSet>
+	                        <relocations>
+	                            <relocation>
+	                                <pattern>org.apache.zookeeper</pattern>
+	                                <shadedPattern>com.bfd.harpc.org.apache.zookeeper</shadedPattern>
+	                            </relocation>
+	                        </relocations>
+	                        <transformers>
+	                       		 <transformer
+			                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+			                        <resource>META-INF/harpc.xsd</resource>
+			                    </transformer>
+			                    <transformer
+			                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+			                        <resource>META-INF/spring.handlers</resource>
+			                    </transformer>
+			                    <transformer
+			                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+			                        <resource>META-INF/spring.schemas</resource>
+			                    </transformer>
+			                </transformers>
+	                    </configuration>
+	                </execution>
+	            </executions>
+    		</plugin>
+    		-->
+    		
+			<!-- 
+            <plugin>
+			  <groupId>org.apache.avro</groupId>
+			  <artifactId>avro-maven-plugin</artifactId>
+			  <version>${avro.version}</version>
+			  <executions>
+			    <execution>
+			      <phase>generate-sources</phase>
+			      <goals>
+			        <goal>schema</goal>
+			        <goal>protocol</goal>  
+                    <goal>idl-protocol</goal>
+			      </goals>
+			      <configuration>
+			        <testSourceDirectory>${project.basedir}/src/test/resources/</testSourceDirectory>
+			        <testOutputDirectory>${project.basedir}/src/main/java/</testOutputDirectory>
+			      </configuration>
+			    </execution>
+			  </executions>
+			</plugin>
+			 -->
+
+			<!-- 
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<configuration>
+					<configurationDirectory>conf</configurationDirectory>
+					<configurationSourceDirectory>src/main/resources</configurationSourceDirectory>
+					<copyConfigurationDirectory>true</copyConfigurationDirectory>
+					<includeConfigurationDirectoryInClasspath>false</includeConfigurationDirectoryInClasspath>
+					<assembleDirectory>${project.build.directory}/test-client</assembleDirectory>
+					<extraJvmArguments>-Xms128m</extraJvmArguments>
+					<repositoryLayout>flat</repositoryLayout>
+					<binFileExtensions>
+						<unix>.sh</unix>
+					</binFileExtensions>
+					<platforms>
+						<platform>windows</platform>
+						<platform>unix</platform>
+					</platforms>
+					<repositoryName>lib</repositoryName>
+					<programs>
+						<program>
+							<mainClass>com.bfd.harpc.RpcException</mainClass>
+						</program>
+					</programs>
+				</configuration>
+			</plugin>
+			 -->
+		</plugins>
+	</build>
+
+</project>

@@ -1,0 +1,132 @@
+.bwizard-steps {
+	display: inline-block;
+	margin: 0; padding: 0;
+	background: #fff; 
+	font-weight: 300;	
+	pointer-events: none !important;
+	cursor: default !important;
+}
+	.bwizard-steps .active {
+		color: #fff;
+		background: #007ACC;
+		 }
+	.bwizard-steps .active:after {
+		border-left-color: #007ACC }
+	.bwizard-steps .active a {
+		color: #fff;
+		cursor: default }
+	.bwizard-steps .label {
+		position: relative;
+		top: -1px;
+		margin: 0 5px 0 0; padding: 1px 5px 2px }
+	.bwizard-steps .active .label {
+		background-color: #333;}
+	.bwizard-steps li {
+		display: inline-block; position: relative;
+		margin-right: 5px;
+		padding: 12px 17px 10px 30px;
+		*display: inline;
+		*padding-left: 17px;
+		background: #efefef;
+		line-height: 18px;
+		list-style: none;
+		zoom: 1; }
+	.bwizard-steps li:first-child {
+		padding-left: 12px;
+ }
+	.bwizard-steps li:first-child:before {
+		border: none }
+	.bwizard-steps li:last-child {
+		margin-right: 0;}
+	.bwizard-steps li:last-child:after {
+		border: none }
+	.bwizard-steps li:before {
+		position: absolute;
+		left: 0; top: 0;
+		height: 0; width: 0;
+		border-bottom: 20px inset transparent;
+		border-left: 20px solid #fff;
+		border-top: 20px inset transparent;
+		content: "" }
+	.bwizard-steps li:after {
+		position: absolute;
+		right: -20px; top: 0;
+		height: 0; width: 0;
+		border-bottom: 20px inset transparent;
+		border-left: 20px solid #efefef;
+		border-top: 20px inset transparent;
+		content: "";
+		z-index: 2; }
+	.bwizard-steps a {
+		color: #333 }
+	.bwizard-steps a:hover {
+		text-decoration: none }
+.bwizard-steps.clickable li:not(.active) {
+	pointer-events: none !important;
+	   cursor: default !important;}
+.bwizard-steps.clickable li:hover:not(.active) {
+	background: #ccc }
+.bwizard-steps.clickable li:hover:not(.active):after {
+	border-left-color: #ccc }
+.bwizard-steps.clickable li:hover:not(.active) a {
+	color: #08c }
+@media (max-width: 480px) { 
+	/* badges only on small screens */
+	.bwizard-steps li:after,
+	.bwizard-steps li:before {
+		border: none }
+	.bwizard-steps li,
+	.bwizard-steps li.active,
+	.bwizard-steps li:first-child,
+	.bwizard-steps li:last-child {
+		margin-right: 0;
+		padding: 0;
+		background-color: transparent }
+}
+.nav-pills >li >a {
+	border-radius: 0px;
+	font-weight: 300;
+}
+
+.wizard-nav {
+	pointer-events: none !important;
+	cursor: default !important;
+	text-align: center;
+	margin-bottom: 15px
+}
+
+.wizard-nav li {
+	float: none;
+	display: inline-block;
+	margin: 0 10px;
+}
+
+.wizard-nav li a {
+	width: 44px;
+	height: 44px;
+	text-align: center;
+	border-radius: 25px;
+	background-color: #f6f6f6;
+	color: #999;
+	font-size: 16px;
+	line-height: 42px;
+	padding: 0;
+}
+
+.wizard > .pager {
+	padding-top: 15px;	
+	padding-bottom: 5px;
+	background: #F7F7F7;
+	margin: 0;
+}
+
+.wizard > .pager .btn-next i {
+	margin-right: 0;
+	margin-left: 10px;
+}
+
+.wizard .tab-pane > h2 {
+	font-size: 28px;
+	margin: 25px 0 25px;	
+}
+		
