@@ -2,7 +2,7 @@
 * 简要说明
   c++ 目前不依赖zk，client端通过直连方式，稳定性高，经过了线上两年考验
 
-* git clone git@git.baifendian.com:dongsheng.fan/ha-rpc.git
+* git clone https://github.com/baifendian/harpc.git
  
 
 * 编译工具
