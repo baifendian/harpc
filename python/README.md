@@ -1,7 +1,7 @@
 ### 下载安装
-* git clone http://git.baifendian.com/dongsheng.fan/ha-rpc.git 
+* git clone https://github.com/baifendian/harpc.git
 
-* cd ha-rpc/python    sudo python setup.py install
+* cd harpc/python    sudo python setup.py install
 
 * 版本依赖  
     gevent>=1.0
