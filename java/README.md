@@ -2,7 +2,14 @@
 
 * 选择最新的harpc的稳定版本，参见Tags
 * 推荐使用maven工程添加相关依赖
-* pom中添加harpc依赖，目前请使用源码deploy至私服（我们正在申请上传至maven中心库）
+* pom中添加harpc依赖，直接在pom中添加如下依赖（已上传至中央仓库）
+```
+<dependency>
+  <groupId>com.baifendian</groupId>
+  <artifactId>harpc</artifactId>
+  <version>1.2</version>
+</dependency>
+```
 
 ### 使用步骤
 
