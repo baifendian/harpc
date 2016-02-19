@@ -48,3 +48,7 @@ harpc的Java、Python、C++版本的性能略有差别，由高到低为：C++�
 
 * Java版本性能测试
 ![java版本性能测试](imgs/java_performance.png)
+
+
+---
+详细内容请参考：[HARPC简介](docs/HARPC简介.pdf)
