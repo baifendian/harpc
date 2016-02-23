@@ -17,28 +17,38 @@
 管理系统依赖环境：
 python 2.7 ；django 1.8.2+ ；kazoo ；uwsgi ；mysql ；
 
+### 安装必要python环境
+
+1. 输入`python --version`查看python版本为2.7.X则不需要安装python，如没有安装python或python版本太旧。根据您的操作系统版本选择`yum install python 2.7` 或 `apt-get install python 2.7` 安装python 2.7
+2. python环境安装后使用pip工具，执行命令`pip install django==1.8.6`安装django。
+3. 执行命令`pip install kazoo`安装kazoo（python zk驱动）。
+4. 执行命令`pip install uwsgi` 安装uwsgi（python web容器）。
+5. 安装mysql-python驱动,下载对应的mysql驱动包https://pypi.python.org/pypi/MySQL-python,解压执行
+    `python setup.py build`
+    `python setup.py install`
+
 ### 部署方式
 
 1. 下载源码包
 
 2. 进入mysql数据库执行管理系统数据库创建命令
-	`CREATE DATABASE harpc_admin;`
+`CREATE DATABASE harpc_admin;`
 
 3. 根据mysql配置信息，ZK信息配置源码包配置文件，具体配置方式参见配置详解
 
 4. 进入源码包根目录执行命令，该命令用于初始化表结构，使用该命令是可根据提示创建admin账号
-	`python manage.py syncdb`
+`python manage.py syncdb`
 
 5. 在源码包根目录执行命令，进入系统DEBUG模式，如果启动成功则配置一切正常
-	`python manage.py runserver 0.0.0.0:8000`
+`python manage.py runserver 0.0.0.0:8000`
 
 6. 在系统DEBUG模式下登录http://localhost:8000/admin/ 该地址为系统后台管理位置，由django原生提供，这设置其他用户等信息
 
-7. 关闭DEBUG模式，创建uwsgi配置文件，修改源码包配置文件(参见配置详解)，使用uwsgi启动管理系统部署完毕。
+7. 关闭DEBUG模式，在源码根目录创建uwsgi配置文件，修改源码包配置文件(参见配置详解)，使用uwsgi启动管理系统部署完毕。[注:1]
 
-### 配置文件详解
+### 配置详解
 
-- 配置文件位于源码包根目录下/manage/settings.py文件
+- 配置文件位于源码包根目录下/harpc_admin/settings.py文件
 - 配置文件重要字段说明：
 
 ```python
@@ -60,7 +70,7 @@ ZK_CLIENTS='clients'
 ZK_CONFIGS='configs'
 #zk statistics节点名称（statistics节点存放在该目录下），如无特殊情况，使用默认值即可
 ZK_STATISTICS='statistics'
-#管理系统在zk内注册的用户名
+#管理系统在zk内注册的用户名(管理系统使用ZK内置权限管理策略，启动时会向ZK注册管理系统专用用户)
 ZK_USERNAME='harpc_admin'
 #管理系统在zk内注册的密码
 ZK_PASSWORD='123456'
@@ -68,17 +78,35 @@ ZK_PASSWORD='123456'
 ZK_STATISTICS_SERIES=[{'name':'avgtime','unit':0},{'name':'mintime','unit':0},{'name':'maxtime','unit':0},{'name':'qps','unit':1},{'name':'success','unit':1},{'name':'failure','unit':1}]
 #数据库配置
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'harpc_admin',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'localhost',
-        'PORT': '3306',
-    }
+'default': {
+'ENGINE': 'django.db.backends.mysql',
+'NAME': 'harpc_admin',
+'USER': 'root',
+'PASSWORD': 'root',
+'HOST': 'localhost',
+'PORT': '3306',
 }
-#手动刷新缓存间隔时间
+}
+#手动刷新缓存间隔时间（单位秒）
 CACHE_FLUSH_TIME = 10
-#自动刷新缓存间隔时间
+#自动刷新缓存间隔时间（单位秒）
 AUTO_CACHE_FLUSH_TIME = 60
 ```
+
+注解：
+
+1. 关于uwsgi的配置，这里给出一个实例：harpc_admin.ini
+
+```python
+[uwsgi]
+http = 0.0.0.0:8000
+master = true
+module = harpc_admin.wsgi:application
+pythonpath = ./
+chdir = ./
+processes = 1 ;请特别注意，本web系统未做进程安全控制，配置多个进程会出现进程安全问题
+buffer-size = 65536
+pidfile = harpc_admin.pid
+enable-threads = 1
+```
+一般情况下，将该配置文件放置在源码根目录，通过命令`uwsgi --ini harpc_admin.ini` 启动uwsgi服务，常见问题如提示端口占用请修改http参数，如提示找不到harpc_admin.wsgi:application模块，请修改pythonpath，chdir参数指向源码根目录的绝对路径。
