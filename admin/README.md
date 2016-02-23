@@ -36,15 +36,17 @@ python 2.7 ；django 1.8.2+ ；kazoo ；uwsgi ；mysql ；
 
 3. 根据mysql配置信息，ZK信息配置源码包配置文件，具体配置方式参见配置详解
 
-4. 进入源码包根目录执行命令，该命令用于初始化表结构，使用该命令是可根据提示创建admin账号
+4. 进入源码包根目录执行命令，该命令用于初始化表结构，使用该命令是可根据提示创建admin账号,该账号为系统管理员账号,如果此处忘记设置管理员可删除数据库重新重复1~4步骤
 `python manage.py syncdb`
 
 5. 在源码包根目录执行命令，进入系统DEBUG模式，如果启动成功则配置一切正常
 `python manage.py runserver 0.0.0.0:8000`
 
-6. 在系统DEBUG模式下登录http://localhost:8000/admin/ 该地址为系统后台管理位置，由django原生提供，这设置其他用户等信息
+6. 在系统DEBUG模式下登录http://localhost:8000/admin/ 该地址为系统后台管理位置，由django原生提供，这设置其他用户等信息,使用4步骤设置的超级管理员登录,在创建用户是设置用户权限中可搜索manage | task | Can guest tasks,此为游客权限,或者manage | task | Can admin tasks,此为管理员权限
 
 7. 关闭DEBUG模式，在源码根目录创建uwsgi配置文件，修改源码包配置文件(参见配置详解)，使用uwsgi启动管理系统部署完毕。[注:1]
+
+8. 访问 http://localhost:8000/manage/ 登录系统
 
 ### 配置详解
 
