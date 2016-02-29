@@ -1,0 +1,3 @@
+2016-02-29 17:19:49,272 [uWSGIWorker1Core0:140735149699072] [manage.libs:170] [harpc:get_statistics] [ERROR]- manage.harpc.get_statistics:((), {})
+2016-02-29 17:20:04,118 [uWSGIWorker1Core0:140735149699072] [manage.libs:359] [harpc:get_servers_total] [ERROR]- manage.harpc.get_servers_total:integer division or modulo by zero
+2016-02-29 17:20:04,118 [uWSGIWorker1Core0:140735149699072] [manage.libs:401] [harpc:get_clients_total] [ERROR]- manage.harpc.get_clients_total:integer division or modulo by zero

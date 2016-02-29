@@ -1,0 +1,116 @@
+﻿{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        harpc_admin
+    </title>
+    <link href="{% static "stylesheets/bootstrap.min.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/font-awesome.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/se7en-font.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/isotope.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/jquery.fancybox.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/fullcalendar.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/wizard.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/select2.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/morris.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/datatables.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/datepicker.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/timepicker.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/colorpicker.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/bootstrap-switch.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/typeahead.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/summernote.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/pygments.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/style.css" %}" media="all" rel="stylesheet" type="text/css"/>
+    <link href="{% static "stylesheets/color/green.css" %}" media="all" rel="alternate stylesheet" title="green-theme"
+          type="text/css"/>
+    <link href="{% static "stylesheets/color/orange.css" %}" media="all" rel="alternate stylesheet" title="orange-theme"
+          type="text/css"/>
+    <link href="{% static "stylesheets/color/magenta.css" %}" media="all" rel="alternate stylesheet"
+          title="magenta-theme"
+          type="text/css"/>
+    <link href="{% static "stylesheets/color/gray.css" %}" media="all" rel="alternate stylesheet" title="gray-theme"
+          type="text/css"/>
+    {% block css_content %}{% endblock %}
+    <script src='{% static "js/jquery.min.js"%}' type="text/javascript"></script>
+    <script src='{% static "assets/jquery-ui/jquery-ui-1.10.1.custom.min.js" %}' type="text/javascript"></script>
+    <script src="{% static "javascripts/bootstrap.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/raphael.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/selectivizr-min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.mousewheel.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.vmap.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.vmap.sampledata.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.vmap.world.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.bootstrap.wizard.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/fullcalendar.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/gcal.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.dataTables.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/datatable-editable.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/excanvas.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.isotope.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/isotope_extras.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/modernizr.custom.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.fancybox.pack.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/select2.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/styleswitcher.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/wysiwyg.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/summernote.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.inputmask.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.validate.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/bootstrap-fileupload.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/bootstrap-datepicker.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/bootstrap-timepicker.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/bootstrap-colorpicker.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/bootstrap-switch.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/typeahead.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/daterange-picker.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/date.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/morris.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/skycons.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/fitvids.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.sparkline.min.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/jquery.easy-pie-chart.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/main.js" %}" type="text/javascript"></script>
+    <script src="{% static "javascripts/respond.js" %}" type="text/javascript"></script>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
+</head>
+<body class="login1">
+<!-- Login Screen -->
+<div class="login-wrapper">
+    <div class="login-container">
+        <a href="{% url "manage.views.service" %}"><img width="350" height="60"
+                                                        src="{% static "images/logo0.png" %}"/></a>
+
+        <form method="POST" action="{% url "manage.views.ajax_login" %}">
+            <div class="form-group">
+                <input class="form-control" name="username" placeholder="用户名" type="text">
+            </div>
+            <div class="form-group">
+                <input class="form-control" name="password" placeholder="密码" type="password"><input type="submit"
+                                                                                                value="&#xf054;">
+            </div>
+            <div class="form-options clearfix">
+                <div class="text-left">
+                    <label class="checkbox"><input name="remMe" type="checkbox"><span>记住我</span></label>
+                </div>
+            </div>
+            <input type="hidden" name="next"
+                   value="{% if request.GET.next %}{{ request.GET.next }}{% else %}{{ next }}{% endif %}"/>
+        </form>
+    </div>
+</div>
+<!-- End Login Screen -->
+</body>
+<script src="{% static "daterangepicker/moment.js" %}" type="text/javascript"></script>
+<script src="{% static "daterangepicker/daterangepicker.js" %}" type="text/javascript"></script>
+<script type="text/javascript" src="{% static "layer/layer.js" %}"></script>
+<script type="text/javascript" src="{% static "highchart/highcharts.js" %}"></script>
+<script type="text/javascript" src="{% static "highchart/modules/exporting.js" %}"></script>
+<script type="text/javascript">
+    {% if msg %}
+        layer.msg('{{ msg }}', {icon: 2});
+    {% endif %}
+</script>
+</html>

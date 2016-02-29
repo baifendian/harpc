@@ -1,0 +1,48 @@
+.typeahead,
+.tt-query,
+.tt-hint {
+  width: 400px;
+  height: 34px;
+  font-size: 16px;
+  outline: none;
+}
+
+.tt-query {
+  padding: 0px 0 0 12px;
+}
+
+.tt-hint {
+  color: #999;
+  padding: 0px 0 0 11px;
+}
+
+.tt-dropdown-menu {
+  width: 422px;
+  margin-top: 4px;
+  padding: 6px 0;
+  box-shadow: 0 1px 2px rgba(0,0,0,.2);
+  background: #FFF;
+  background: rgba(255,255,255,.98);
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  z-index: 1000 !important;
+}
+
+.tt-suggestion {
+  padding: 3px 15px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+  color: #fff;
+  background-color: #007aff;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+.gist {
+  font-size: 14px;
+}

@@ -1,0 +1,528 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta charset="utf-8" />
+		<title>高可用RPC系统</title>
+
+		<meta name="description" content="top menu &amp; navigation" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+
+		<!-- bootstrap & fontawesome -->
+		<link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}" />
+		<link rel="stylesheet" href="{% static "css/font-awesome.min.css"%}" />
+
+		<!-- page specific plugin styles -->
+
+		<!-- text fonts -->
+		<link rel="stylesheet" href="{% static "css/ace-fonts.css"%}" />
+
+		<!-- ace styles -->
+		<link rel="stylesheet" href="{% static "css/ace.min.css"%}" />
+
+		<!--[if lte IE 9]>
+			<link rel="stylesheet" href="{% static "css/ace-part2.min.css"%}" />
+		<![endif]-->
+		<link rel="stylesheet" href="{% static "css/ace-skins.min.css"%}" />
+		<link rel="stylesheet" href="{% static "css/ace-rtl.min.css"%}" />
+
+		<!--[if lte IE 9]>
+		  <link rel="stylesheet" href="{% static "css/ace-ie.min.css"%}" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+		<script src="{% static "js/ace-extra.min.js"%}"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lte IE 8]>
+		<script src="{% static "js/html5shiv.js"%}"></script>
+		<script src="{% static "js/respond.min.js"%}"></script>
+		<![endif]-->
+        {% block css_content %}{% endblock %}
+
+	</head>
+
+	<body class="no-skin">
+		<!-- #section:basics/navbar.layout -->
+		<div id="navbar" class="navbar navbar-default    navbar-collapse       h-navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="navbar-container" id="navbar-container">
+				<div class="navbar-header pull-left">
+					<!-- #section:basics/navbar.layout.brand -->
+					<a href="#" class="navbar-brand" style="padding: 5px 0 3px 0;">
+						<small>
+							<img src="{% static 'avatars/logo.png' %}" style="width: 38px"/>
+							高可用RPC系统
+						</small>
+					</a>
+
+					<!-- /section:basics/navbar.layout.brand -->
+
+					<!-- #section:basics/navbar.toggle -->
+					<button class="pull-right navbar-toggle navbar-toggle-img collapsed" type="button" data-toggle="collapse" data-target=".navbar-buttons,.navbar-menu">
+						<span class="sr-only">Toggle user menu</span>
+
+						<img src="{% static "avatars/user.jpg"%}" alt="Jason's Photo" />
+					</button>
+
+					<button class="pull-right navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".sidebar">
+						<span class="sr-only">Toggle sidebar</span>
+
+						<span class="icon-bar"></span>
+
+						<span class="icon-bar"></span>
+
+						<span class="icon-bar"></span>
+					</button>
+
+					<!-- /section:basics/navbar.toggle -->
+				</div>
+
+				<!-- #section:basics/navbar.dropdown -->
+				<div class="navbar-buttons navbar-header pull-right  collapse navbar-collapse" role="navigation">
+					<ul class="nav ace-nav">
+						<li class="purple" id = 'flushCache'>
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<i class="ace-icon fa fa-bell icon-animated-bell"></i>
+								强制刷新缓存
+							</a>
+						</li>
+						<li class="transparent">
+							<div class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+								<div class="tabbable">
+									<ul class="nav nav-tabs">
+										<li class="active">
+											<a data-toggle="tab" href="#navbar-tasks">
+												Tasks
+												<span class="badge badge-danger">4</span>
+											</a>
+										</li>
+
+										<li>
+											<a data-toggle="tab" href="#navbar-messages">
+												Messages
+												<span class="badge badge-danger">5</span>
+											</a>
+										</li>
+									</ul><!-- .nav-tabs -->
+
+									<div class="tab-content">
+										<div id="navbar-tasks" class="tab-pane in active">
+											<ul class="dropdown-menu-right dropdown-navbar dropdown-menu">
+												<li>
+													<a href="#">
+														<div class="clearfix">
+															<span class="pull-left">Software Update</span>
+															<span class="pull-right">65%</span>
+														</div>
+
+														<div class="progress progress-mini">
+															<div style="width:65%" class="progress-bar"></div>
+														</div>
+													</a>
+												</li>
+
+												<li>
+													<a href="#">
+														<div class="clearfix">
+															<span class="pull-left">Hardware Upgrade</span>
+															<span class="pull-right">35%</span>
+														</div>
+
+														<div class="progress progress-mini">
+															<div style="width:35%" class="progress-bar progress-bar-danger"></div>
+														</div>
+													</a>
+												</li>
+
+												<li>
+													<a href="#">
+														<div class="clearfix">
+															<span class="pull-left">Unit Testing</span>
+															<span class="pull-right">15%</span>
+														</div>
+
+														<div class="progress progress-mini">
+															<div style="width:15%" class="progress-bar progress-bar-warning"></div>
+														</div>
+													</a>
+												</li>
+
+												<li>
+													<a href="#">
+														<div class="clearfix">
+															<span class="pull-left">Bug Fixes</span>
+															<span class="pull-right">90%</span>
+														</div>
+
+														<div class="progress progress-mini progress-striped active">
+															<div style="width:90%" class="progress-bar progress-bar-success"></div>
+														</div>
+													</a>
+												</li>
+
+												<li class="dropdown-footer">
+													<a href="#">
+														See tasks with details
+														<i class="ace-icon fa fa-arrow-right"></i>
+													</a>
+												</li>
+											</ul>
+										</div><!-- /.tab-pane -->
+
+										<div id="navbar-messages" class="tab-pane">
+											<ul class="dropdown-menu-right dropdown-navbar dropdown-menu">
+												<li class="dropdown-content">
+													<ul class="dropdown-menu dropdown-navbar">
+														<li>
+															<a href="#">
+																<img src="{% static "avatars/avatar.png"%}" class="msg-photo" alt="Alex's Avatar" />
+																<span class="msg-body">
+																	<span class="msg-title">
+																		<span class="blue">Alex:</span>
+																		Ciao sociis natoque penatibus et auctor ...
+																	</span>
+
+																	<span class="msg-time">
+																		<i class="ace-icon fa fa-clock-o"></i>
+																		<span>a moment ago</span>
+																	</span>
+																</span>
+															</a>
+														</li>
+
+														<li>
+															<a href="#">
+																<img src="{% static "avatars/avatar3.png"%}" class="msg-photo" alt="Susan's Avatar" />
+																<span class="msg-body">
+																	<span class="msg-title">
+																		<span class="blue">Susan:</span>
+																		Vestibulum id ligula porta felis euismod ...
+																	</span>
+
+																	<span class="msg-time">
+																		<i class="ace-icon fa fa-clock-o"></i>
+																		<span>20 minutes ago</span>
+																	</span>
+																</span>
+															</a>
+														</li>
+
+														<li>
+															<a href="#">
+																<img src="{% static "avatars/avatar4.png"%}" class="msg-photo" alt="Bob's Avatar" />
+																<span class="msg-body">
+																	<span class="msg-title">
+																		<span class="blue">Bob:</span>
+																		Nullam quis risus eget urna mollis ornare ...
+																	</span>
+
+																	<span class="msg-time">
+																		<i class="ace-icon fa fa-clock-o"></i>
+																		<span>3:15 pm</span>
+																	</span>
+																</span>
+															</a>
+														</li>
+
+														<li>
+															<a href="#">
+																<img src="{% static "avatars/avatar2.png"%}" class="msg-photo" alt="Kate's Avatar" />
+																<span class="msg-body">
+																	<span class="msg-title">
+																		<span class="blue">Kate:</span>
+																		Ciao sociis natoque eget urna mollis ornare ...
+																	</span>
+
+																	<span class="msg-time">
+																		<i class="ace-icon fa fa-clock-o"></i>
+																		<span>1:33 pm</span>
+																	</span>
+																</span>
+															</a>
+														</li>
+
+														<li>
+															<a href="#">
+																<img src="{% static "avatars/avatar5.png"%}" class="msg-photo" alt="Fred's Avatar" />
+																<span class="msg-body">
+																	<span class="msg-title">
+																		<span class="blue">Fred:</span>
+																		Vestibulum id penatibus et auctor  ...
+																	</span>
+
+																	<span class="msg-time">
+																		<i class="ace-icon fa fa-clock-o"></i>
+																		<span>10:09 am</span>
+																	</span>
+																</span>
+															</a>
+														</li>
+													</ul>
+												</li>
+
+												<li class="dropdown-footer">
+													<a href="inbox.html">
+														See all messages
+														<i class="ace-icon fa fa-arrow-right"></i>
+													</a>
+												</li>
+											</ul>
+										</div><!-- /.tab-pane -->
+									</div><!-- /.tab-content -->
+								</div><!-- /.tabbable -->
+							</div><!-- /.dropdown-menu -->
+						</li>
+
+						<!-- #section:basics/navbar.user_menu -->
+						<li class="light-blue">
+							<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+								<img class="nav-user-photo" src="{% static "avatars/user.jpg"%}" alt="Jason's Photo" />
+								<span class="user-info">
+									<small>欢迎</small>
+									{% if perms.manage.admin_task %}管理员{% else %}Guest{% endif %}
+								</span>
+
+								<i class="ace-icon fa fa-caret-down"></i>
+							</a>
+
+							<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+
+
+								<li>
+									<a href="{% url 'manage.views.userLogout' %}">
+										<i class="ace-icon fa fa-power-off"></i>
+										退出
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<!-- /section:basics/navbar.user_menu -->
+					</ul>
+				</div>
+
+				<!-- /section:basics/navbar.dropdown -->
+				<nav role="navigation" class="navbar-menu pull-left collapse navbar-collapse">
+					<!-- #section:basics/navbar.nav -->
+					<ul class="nav navbar-nav">
+						<li >
+							<a href="{% url 'manage.views.service' %}" {% if not 'service=' in request.path and 'service' in request.path %}style="color: #33FFCC;"{% endif %}>
+								<i class="ace-icon fa fa-th-list"></i>
+								service
+							</a>
+						</li>
+
+						<li>
+							<a href="{% url 'manage.views.child' %}" {% if 'child' in request.path %}style="color: #33FFCC;"{% endif %}>
+								<i class="ace-icon fa fa-th-large"></i>
+								detail
+							</a>
+						</li>
+					</ul>
+
+					<!-- /section:basics/navbar.nav -->
+
+					<!-- #section:basics/navbar.form -->
+					
+
+					<!-- /section:basics/navbar.form -->
+				</nav>
+			</div><!-- /.navbar-container -->
+		</div>
+
+		<!-- /section:basics/navbar.layout -->
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<!-- #section:basics/sidebar.horizontal -->
+			<div id="sidebar" class="sidebar      h-sidebar                navbar-collapse collapse">
+				<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+				</script>
+
+				<!-- /.nav-list -->
+
+				<!-- #section:basics/sidebar.layout.minimize -->
+				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+				</div>
+
+				<!-- /section:basics/sidebar.layout.minimize -->
+				<script type="text/javascript">
+					try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+				</script>
+			</div>
+
+			<!-- /section:basics/sidebar.horizontal -->
+			<div class="main-content">
+                {% block pbreadcrumbs_content %}{% endblock %}
+				<div class="page-content">
+					<!-- #section:settings.box -->
+
+					<!-- /section:settings.box -->
+					{% block page_content %}{% endblock %}
+				</div><!-- /.page-content -->
+			</div><!-- /.main-content -->
+
+			<div class="footer">
+				<div class="footer-inner">
+					<!-- #section:basics/footer -->
+					<div class="footer-content">
+						<span class="bigger-120">
+							<span class="blue bolder">百分点</span>
+							高可用RPC系统 &copy; 2015
+						</span>
+
+						&nbsp; &nbsp;
+						<span class="action-buttons">
+							<a href="#">
+								<i class="ace-icon fa fa-twitter-square light-blue bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-facebook-square text-primary bigger-150"></i>
+							</a>
+
+							<a href="#">
+								<i class="ace-icon fa fa-rss-square orange bigger-150"></i>
+							</a>
+						</span>
+					</div>
+
+					<!-- /section:basics/footer -->
+				</div>
+			</div>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='{% static "js/jquery.min.js"%}'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='{% static "js/jquery1x.min.js"%}'>"+"<"+"/script>");
+</script>
+<![endif]-->
+		<script type="text/javascript">
+			if('ontouchstart' in document.documentElement) document.write("<script src='{% static "js/jquery.mobile.custom.min.js"%}'>"+"<"+"/script>");
+		</script>
+		<script src="{% static "js/bootstrap.min.js"%}"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<!-- ace scripts -->
+		<script src="{% static "js/ace-elements.min.js"%}"></script>
+		<script src="{% static "js/ace.min.js"%}"></script>
+
+		<!-- inline scripts related to this page -->
+		<script type="text/javascript">
+			jQuery(function($) {
+			 var $sidebar = $('.sidebar').eq(0);
+			 if( !$sidebar.hasClass('h-sidebar') ) return;
+			
+			 $(document).on('settings.ace.top_menu' , function(ev, event_name, fixed) {
+				if( event_name !== 'sidebar_fixed' ) return;
+			
+				var sidebar = $sidebar.get(0);
+				var $window = $(window);
+			
+				//return if sidebar is not fixed or in mobile view mode
+				if( !fixed || ( ace.helper.mobile_view() || ace.helper.collapsible() ) ) {
+					$sidebar.removeClass('hide-before');
+					//restore original, default marginTop
+					ace.helper.removeStyle(sidebar , 'margin-top')
+			
+					$window.off('scroll.ace.top_menu')
+					return;
+				}
+			
+			
+				 var done = false;
+				 $window.on('scroll.ace.top_menu', function(e) {
+			
+					var scroll = $window.scrollTop();
+					scroll = parseInt(scroll / 4);//move the menu up 1px for every 4px of document scrolling
+					if (scroll > 17) scroll = 17;
+			
+			
+					if (scroll > 16) {			
+						if(!done) {
+							$sidebar.addClass('hide-before');
+							done = true;
+						}
+					}
+					else {
+						if(done) {
+							$sidebar.removeClass('hide-before');
+							done = false;
+						}
+					}
+			
+					sidebar.style['marginTop'] = (17-scroll)+'px';
+				 }).triggerHandler('scroll.ace.top_menu');
+			
+			 }).triggerHandler('settings.ace.top_menu', ['sidebar_fixed' , $sidebar.hasClass('sidebar-fixed')]);
+			
+			 $(window).on('resize.ace.top_menu', function() {
+				$(document).triggerHandler('settings.ace.top_menu', ['sidebar_fixed' , $sidebar.hasClass('sidebar-fixed')]);
+			 });
+			
+			
+			});
+            $("#flushCache").click(function(){
+                var index = layer.load(1, {
+                    shade: [0.1, '#fff'] //0.1透明度的白色背景
+                });
+                $.ajax({
+                    url: '{% url "manage.views.flush_cache" %}',
+                    method: 'POST',
+                    success: function (data) {
+                        //layer.msg(data['msg'], {icon: 2});
+                        if (data['rc'] == 0) {
+                            layer.msg(data['msg'], {icon: 1});
+                        } else {
+                            layer.msg(data['msg'], {icon: 2});
+                        }
+                        layer.close(index);
+                    },
+                    error: function () {
+                        layer.msg('服务器内部异常', {icon: 2});
+                        layer.close(index);
+                    }
+                });
+            });
+		</script>
+
+		<link rel="stylesheet" href="{% static "css/ace.onpage-help.css"%}" />
+		<link rel="stylesheet" href="{% static "js/themes/sunburst.css"%}" />
+
+		<script type="text/javascript"> ace.vars['base'] = '..'; </script>
+		<script src="{% static "js/ace/ace.onpage-help.js"%}"></script>
+		<script src="{% static "js/rainbow.js"%}"></script>
+		<script src="{% static "js/language/generic.js"%}"></script>
+		<script src="{% static "js/language/html.js"%}"></script>
+		<script src="{% static "js/language/css.js"%}"></script>
+		<script src="{% static "js/language/javascript.js"%}"></script>
+        <script type="text/javascript" src="{% static "layer/layer.js" %}"></script>
+        {% block js_content %}{% endblock %}
+	</body>
+</html>

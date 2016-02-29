@@ -1,0 +1,61 @@
+a {
+  color: #c741c9; }
+
+.navbar .container-fluid.top-bar form .form-control:focus {
+  border-color: #c741c9; }
+
+.navbar .container-fluid.top-bar .nav > li.open > a span, .navbar .container-fluid.top-bar .nav > li.active > a span, .navbar .container-fluid.top-bar .nav > li.open.active > a span {
+  color: #c741c9; }
+
+.navbar .container-fluid.main-nav .nav-collapse .nav > li a.current span {
+  color: #c741c9; }
+.navbar .container-fluid.main-nav .nav-collapse .nav > li a.current .caret {
+  border-top-color: #c741c9; }
+
+.navbar .container-fluid.main-nav .nav-collapse .nav > li > a.current {
+  color: #c741c9; }
+
+.widget-container .heading {
+  color: #c741c9; }
+
+.dropdown-menu li a:hover {
+  border-bottom-color: #c741c9;
+  color: #c741c9; }
+
+.form-control:focus {
+  border-color: #c741c9; }
+
+.stats-container [class^="col-"] .number, .stats-container [class*="col-"] .number {
+  color: #c741c9; }
+
+.stats-container [class^="col-"] .number .icon, .stats-container [class*="col-"] .number .icon {
+  background-position: left -114px; }
+  .stats-container [class^="col-"] .number .icon.visitors, .stats-container [class*="col-"] .number .icon.visitors {
+    background-position: -50px -114px; }
+  .stats-container [class^="col-"] .number .icon.money, .stats-container [class*="col-"] .number .icon.money {
+    background-position: -100px -114px; }
+  .stats-container [class^="col-"] .number .icon.chat-bubbles, .stats-container [class*="col-"] .number .icon.chat-bubbles {
+    background-position: -150px -114px; }
+
+.task-widget input[type="checkbox"]:checked + .task-checkbox {
+  color: #c741c9; }
+
+.select2-container-active .select2-choice, .select2-container-active .select2-choices {
+  border-color: #c741c9; }
+
+.select2-container-multi.select2-container-active .select2-choices {
+  border-color: #c741c9; }
+
+.select2-drop-active {
+  border-color: #c741c9; }
+
+.dataTable th {
+  color: #c741c9; }
+  .dataTable th.sorting:after {
+    border-top: 5px solid #c741c9; }
+  .dataTable th.sorting:before {
+    border-bottom: 5px solid #c741c9; }
+  .dataTable th.sorting_asc:after {
+    border-bottom: 5px solid #c741c9; }
+  .dataTable th.sorting_desc:after {
+    border-top: 5px solid #c741c9; }
