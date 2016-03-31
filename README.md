@@ -1,7 +1,7 @@
 ## harpc是什么
 HARPC（High Availability RPC）是基于Thrift的跨语言、高可用的RPC框架。具备高性能、高可用、轻量级等特点，在[百分点科技](http://www.baifendian.com/)内部服务中广泛使用。
 
-QQ讨论群：398091913  
+QQ讨论群（398091913）：<a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=302796d303355d2fa70bba985aa2e13f554f910ccab428f1437a078d7082fb7c"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="高可用RPC" title="高可用RPC"></a>  
 使用指南：[HARPC简介](docs/HARPC简介.pdf)
 
 ## 功能介绍
