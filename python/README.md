@@ -119,7 +119,7 @@ pool_size=10
 (7) Client代码示例
 ```
 #读取配置文件
-conf = config.Config(“./etc/client.conf”)
+conf = config.Config("./etc/client.conf")
 
 #创建实例
  manager = client.Client(TutorialService.Client, conf)
