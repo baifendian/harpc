@@ -109,7 +109,7 @@ registry.connectstr = 172.18.1.22:2181,172.18.1.23:2181,172.18.1.24:2181
 #zookeeper会话超时时间，单位ms
 registry.timeout = 3000
 #直连到不同的server,多个server以分号隔开（若配置address，则使用直连方式）
-#address=172.18.1.22:19090;172.18.1.23:19090
+#registry.address=172.18.1.22:19090;172.18.1.23:19090
 
 #服务名
 client.name = harpc-demo-client
