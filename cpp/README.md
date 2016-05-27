@@ -123,3 +123,8 @@ ms_client_pool->invoke([&](bfd::harpc::demo::EchoServiceClient *clintPtr) {
     });
 
 ```
+
+(7) 编译
+我们代码示例是通过 cmake 进行编译的，具体操作为：
+cmake .
+make ${target}
