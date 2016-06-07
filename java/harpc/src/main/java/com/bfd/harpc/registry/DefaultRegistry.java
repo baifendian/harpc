@@ -38,7 +38,7 @@ public class DefaultRegistry implements IRegistry {
         String[] hostnames = serverAddress.split(";");// "ip:port;ip:port"
         for (String hostname : hostnames) {
             String[] address = hostname.split(":");
-            hostSet.addServerInstance(new ServerNode(address[0], Integer.valueOf(address[1])));
+            hostSet.addServerInstance(new ServerNode(address[0], Integer.parseInt(address[1])));
         }
     }
 

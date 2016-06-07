@@ -47,7 +47,7 @@ public class ServerNodeUtils {
         String[] hostname = address.split(":");
         int weight = DEFAULT_WEIGHT;
         if (hostname.length == 3) {
-            weight = Integer.valueOf(hostname[2]);
+            weight = Integer.parseInt(hostname[2]);
         }
         String ip = hostname[0];
         Integer port = Integer.valueOf(hostname[1]);
