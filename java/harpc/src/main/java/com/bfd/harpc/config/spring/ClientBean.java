@@ -105,6 +105,19 @@ public class ClientBean extends ClientConfig implements FactoryBean, Application
             if (applicationContext != null) {
                 Map<String, RegistryConfig> regMap = applicationContext.getBeansOfType(RegistryConfig.class);
                 if (regMap != null && regMap.size() > 0) {
+
+                    for(RegistryConfig config:regMap.values()){
+                        if ( config != null ){
+                            try {
+                                zkClient = config.obtainZkClient();
+                                registry = new ZkClientRegistry(getService(), zkClient, clientNode);
+                            } catch (Exception e) {
+                                throw new RpcException("Registry error!", e);
+                            }
+                            break;
+                        }
+                    }
+                    /* 改进一些微小的性能
                     for (String key : regMap.keySet()) {
                         if (regMap.get(key) != null) {
                             try {
@@ -115,7 +128,7 @@ public class ClientBean extends ClientConfig implements FactoryBean, Application
                             }
                             break;
                         }
-                    }
+                    } */
                 }
             }
         }
