@@ -59,7 +59,7 @@ public class StatisticsHelper {
                 Long min = Long.MAX_VALUE;
                 for (String s : list) {
                     if (s.length() > length) {
-                        Long tempValue = new Long(s.substring(length));
+                        Long tempValue = Long.valueOf(s.substring(length));
                         if (tempValue < min)
                             min = tempValue;
                     }
