@@ -23,6 +23,8 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import com.bfd.harpc.RpcException;
 import com.bfd.harpc.common.Constants;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * 注册中心配置
  * <p>
@@ -96,14 +98,22 @@ public class RegistryConfig implements IConfigCheck {
      * @param namespace
      * @return {@link CuratorFramework}
      */
-    private CuratorFramework create(String connectString, Integer sessionTimeout, String namespace, int retry) {
+    private CuratorFramework create(String connectString, Integer sessionTimeout, String namespace, int retry){
         CuratorFrameworkFactory.Builder builder = CuratorFrameworkFactory.builder();
         if (StringUtils.isNotEmpty(auth)) {
-            builder.authorization("digest", auth.getBytes());
+            try {
+                builder.authorization("digest", auth.getBytes("utf-8"));
+            } catch (UnsupportedEncodingException e) {
+                //Assert never throw
+                e.printStackTrace();
+            }
         }
-        return builder.connectString(connectString).sessionTimeoutMs(sessionTimeout).connectionTimeoutMs(sessionTimeout).namespace(namespace).retryPolicy(new ExponentialBackoffRetry(
-                                                                                                                                                                                      1000,
-                                                                                                                                                                                      retry)).defaultData(null).build();
+        return builder.connectString(connectString)
+                      .sessionTimeoutMs(sessionTimeout)
+                      .connectionTimeoutMs(sessionTimeout)
+                      .namespace(namespace)
+                      .retryPolicy(new ExponentialBackoffRetry(1000,retry))
+                      .defaultData(null).build();
     }
 
     /**
