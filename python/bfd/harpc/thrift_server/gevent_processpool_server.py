@@ -26,6 +26,7 @@ import gevent.monkey
 gevent.monkey.patch_os()
 gevent.monkey.patch_socket()
 gevent.monkey.patch_time()
+gevent.monkey.patch_ssl()
 
 logger = logging.getLogger(__name__)
 
