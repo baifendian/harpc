@@ -201,8 +201,7 @@ public class RpcMonitor {
             statMap.get(serverNode).setTotal(info);
         } else {
             statMap.putIfAbsent(serverNode, new StatisticsTotal());
-            Map<String, StatisticsInfo> map = new HashMap<String, StatisticsInfo>();
-            map.put(timeStamp, info);
+
             statMap.get(serverNode).getDetail().add(info);
             // 调整节点数目
             StatisticsHelper.adjustNodesByLimit(statMap.get(serverNode).getDetail(), NODE_COUNT_LIMIT);
@@ -213,9 +212,9 @@ public class RpcMonitor {
         try {
             // 创建节点并添加信息
             if (zkClient.checkExists().forPath(path) != null) {
-                zkClient.setData().forPath(path, jsonString.getBytes());
+                zkClient.setData().forPath(path, jsonString.getBytes("utf-8"));
             } else {
-                zkClient.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path, jsonString.getBytes());
+                zkClient.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(path, jsonString.getBytes("utf-8"));
             }
 
         } catch (Exception e) {

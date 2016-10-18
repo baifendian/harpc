@@ -40,7 +40,7 @@ public class ResourceUtils {
     private static final Object SYS_OBJECT = new Object();
 
     /** {@link ClassLoader} */
-    private static ClassLoader classLoader;
+    private static volatile ClassLoader classLoader;
 
     /**
      * 从项目，jar或文件系统中读取指定路径的文件<br />
@@ -150,23 +150,26 @@ public class ResourceUtils {
         }
 
         synchronized (SYS_OBJECT) {
-            if (classLoader == null) {
-                ClassLoader tempClassLoader = null;
-                try {
-                    tempClassLoader = Thread.currentThread().getContextClassLoader();
-                } catch (Exception ex) {
-                    // Cannot access thread context ClassLoader - falling back
-                    // to system class loader...
-                }
-
-                if (tempClassLoader == null) {
-                    // No thread context class loader -> use class loader of
-                    // this class.
-                    tempClassLoader = ResourceUtils.class.getClassLoader();
-                }
-
-                classLoader = tempClassLoader;
+            if (classLoader != null) {
+                return classLoader;
             }
+
+            ClassLoader tempClassLoader = null;
+            try {
+                tempClassLoader = Thread.currentThread().getContextClassLoader();
+            } catch (Exception ex) {
+                // Cannot access thread context ClassLoader - falling back
+                // to system class loader...
+            }
+
+            if (tempClassLoader == null) {
+                // No thread context class loader -> use class loader of
+                // this class.
+                tempClassLoader = ResourceUtils.class.getClassLoader();
+            }
+
+            classLoader = tempClassLoader;
+
         }
 
         return classLoader;

@@ -103,6 +103,21 @@ public class ServerBean extends ServerConfig implements ApplicationContextAware,
         if (applicationContext != null) {
             Map<String, RegistryConfig> regMap = applicationContext.getBeansOfType(RegistryConfig.class);
             if (regMap != null && regMap.size() > 0) {
+                for(RegistryConfig config : regMap.values()){
+                    if ( config != null ){
+                        try {
+                            zkClient = config.obtainZkClient();
+                            auth = config.getAuth();
+                            if (StringUtils.isEmpty(auth)) {
+                                throw new RpcException(RpcException.CONFIG_EXCEPTION, "The params 'auth' cannot empty!");
+                            }
+                        } catch (Exception e) {
+                            throw new RpcException("Registry error!", e);
+                        }
+                        break;
+                    }
+                }
+                /* 一些小的性能改进
                 for (String key : regMap.keySet()) {
                     if (regMap.get(key) != null) {
                         try {
@@ -117,6 +132,7 @@ public class ServerBean extends ServerConfig implements ApplicationContextAware,
                         break;
                     }
                 }
+                */
             }
         }
 
