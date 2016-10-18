@@ -148,3 +148,6 @@ try {
 	e.printStackTrace();
 }
 ```
+
+###  示例代码
+参考：[Java 版 Demo](harpc/src/test/java/com/bfd/harpc/test/demo)  
