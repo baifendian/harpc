@@ -37,7 +37,7 @@ def test():
         for i in xrange(req_num):
             try:
                 proxy_client.echo(msg)
-            except Exception, e:
+            except Exception as e:
                 error += 1
     jobs = []
     for i in range(Coroutines):

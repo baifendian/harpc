@@ -32,4 +32,4 @@ class RoundRobinStrategy(LoadBalanceStrategyBase):
     def get_backend(self):
         if len(self._backend) == 0:
             raise Exception("no backends")
-        return self._iterator.next()
+        return next(self._iterator)

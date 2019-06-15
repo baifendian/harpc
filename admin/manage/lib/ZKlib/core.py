@@ -74,7 +74,7 @@ class ZKWrap(object):
             self.zk.start(timeout=self.zk_timeout)
             self.zk.add_auth(scheme='digest', credential=self.zk_username + ':' + self.zk_password)
             logger.info("connect to zk servers")
-        except Exception, e:
+        except Exception as e:
             logger.error('manage.ZKWrap.init_connect:' + getExceptionDesc(e))
             return False
 
@@ -92,7 +92,7 @@ class ZKWrap(object):
                 acls = safe_list_get(result, 0, [])
                 if self.zk_harpc_acl in acls:
                     acl = True
-            except Exception, e:
+            except Exception as e:
                 acl = False
 
             servers = {}
@@ -108,7 +108,7 @@ class ZKWrap(object):
                     try:
                         server_data_str = safe_list_get(server_data, 0, "{}")
                         server_data_dict = json.loads(server_data_str)
-                    except Exception, e:
+                    except Exception as e:
                         logger.error(
                             'manage.ZKWrap.load_zk_resource getdata:' + service + "/" + server + "/" + getExceptionDesc(
                                 e))
@@ -140,7 +140,7 @@ class ZKWrap(object):
                     try:
                         client_data_str = safe_list_get(client_data, 0, "{}")
                         client_data_dict = json.loads(client_data_str)
-                    except Exception, e:
+                    except Exception as e:
                         logger.error(
                             'manage.ZKWrap.load_zk_resource getdata:' + service + "/" + client + ":" + getExceptionDesc(
                                 e))
@@ -179,7 +179,7 @@ class ZKWrap(object):
                 acls = safe_list_get(result, 0, [])
                 if self.zk_harpc_acl in acls:
                     acl = True
-            except Exception, e:
+            except Exception as e:
                 acl = False
 
             servers = {}
@@ -193,7 +193,7 @@ class ZKWrap(object):
                     try:
                         server_data_str = safe_list_get(server_data, 0, "{}")
                         server_data_dict = json.loads(server_data_str)
-                    except Exception, e:
+                    except Exception as e:
                         logger.error(
                             'manage.ZKWrap.watch_services getdata:' + add_service + "/" + server + ":" + getExceptionDesc(
                                 e))
@@ -223,7 +223,7 @@ class ZKWrap(object):
                     try:
                         client_data_str = safe_list_get(client_data, 0, "{}")
                         client_data_dict = json.loads(client_data_str)
-                    except Exception, e:
+                    except Exception as e:
                         logger.error(
                             'manage.ZKWrap.watch_services getdata:' + add_service + "/" + client + ":" + getExceptionDesc(
                                 e))
@@ -270,7 +270,7 @@ class ZKWrap(object):
                 try:
                     server_data_str = safe_list_get(server_data, 0, "{}")
                     server_data_dict = json.loads(server_data_str)
-                except Exception, e:
+                except Exception as e:
                     logger.error(
                         'manage.ZKWrap.watch_servers getdata:' + service + "/" + add_server + ":" + getExceptionDesc(e))
                     pass
@@ -314,7 +314,7 @@ class ZKWrap(object):
                 try:
                     client_data_str = safe_list_get(client_data, 0, "{}")
                     client_data_dict = json.loads(client_data_str)
-                except Exception, e:
+                except Exception as e:
                     logger.error(
                         'manage.ZKWrap.watch_clients getdata:' + service + "/" + add_client + ":" + getExceptionDesc(e))
                     pass
@@ -355,7 +355,7 @@ class ZKWrap(object):
                     try:
                         server_data_str = safe_list_get(server_data, 0, "{}")
                         server_data_dict = json.loads(server_data_str)
-                    except Exception, e:
+                    except Exception as e:
                         logger.error(
                             'manage.ZKWrap.watch_servers_exists getdata:' + service + "/" + server + ":" + getExceptionDesc(
                                 e))
@@ -394,7 +394,7 @@ class ZKWrap(object):
                     try:
                         client_data_str = safe_list_get(client_data, 0, "{}")
                         client_data_dict = json.loads(client_data_str)
-                    except Exception, e:
+                    except Exception as e:
                         logger.error(
                             'manage.ZKWrap.watch_clients_exists getdata:' + service + "/" + client + ":" + getExceptionDesc(
                                 e))

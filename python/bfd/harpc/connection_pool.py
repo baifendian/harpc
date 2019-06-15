@@ -47,16 +47,16 @@ class ConnectionPool(object):
         self._closed = False
         if ASYNC_TAG:
             from gevent.lock import BoundedSemaphore
-            from gevent import queue as Queue
+            from gevent import queue
             self._semaphore = BoundedSemaphore(self._size)
-            self._connection_queue = Queue.LifoQueue(self._size)
-            self._QueueEmpty = Queue.Empty
+            self._connection_queue = queue.LifoQueue(self._size)
+            self._QueueEmpty = queue.Empty
         else:
             from threading import BoundedSemaphore
-            import Queue
+            import queue
             self._semaphore = BoundedSemaphore(self._size)
-            self._connection_queue = Queue.LifoQueue(self._size)
-            self._QueueEmpty = Queue.Empty
+            self._connection_queue = queue.LifoQueue(self._size)
+            self._QueueEmpty = queue.Empty
 
     def close(self):
         self._closed = True

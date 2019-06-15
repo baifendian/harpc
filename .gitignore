@@ -6,3 +6,6 @@ log
 .project
 .metadata
 RemoteSystemsTempFiles
+__pycache__
+*.egg-info
+.history

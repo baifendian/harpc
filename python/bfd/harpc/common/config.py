@@ -14,14 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import ConfigParser
-from ConfigParser import NoSectionError, NoOptionError
+import configparser
+from configparser import NoSectionError, NoOptionError
 
 
 class Config(object):
 
     def __init__(self, file_name=None):
-        self.cf = ConfigParser.ConfigParser()
+        self.cf = configparser.ConfigParser()
         if file_name:
             self.cf.read(file_name)
 
@@ -54,5 +54,5 @@ class Config(object):
     def getboolean(self, section, option, default=False, required=False):
         v = self.get(section, option, default, required)
         if v.lower() not in self._boolean_states:
-            raise ValueError, 'Not a boolean: %s' % v
+            raise ValueError('Not a boolean: %s' % v)
         return self._boolean_states[v.lower()]

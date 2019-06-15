@@ -106,7 +106,7 @@ class ServerBase(object):
                     self._zkclient.handler.spawn(self._register_server)
 
             self._zkclient.add_listener(state_listener)
-        except Exception, e:
+        except Exception as e:
             self._logger.exception(e)
             raise e
         self._start()
@@ -160,7 +160,7 @@ class ServerBase(object):
                 flag = "SUCCESS"
                 try:
                     func(*args, **kwargs)
-                except Exception, e:
+                except Exception as e:
                     flag = "FAILED"
                     raise e
                 finally:
@@ -208,7 +208,7 @@ class ProcessPoolThriftServer(ServerBase):
                 signal.signal(signal.SIGINT, add_clean_shutdown(sigint_handler))
             else:
                 signal.signal(signal.SIGINT, clean_shutdown)
-        except Exception, e:
+        except Exception as e:
             self._logger.exception(e)
             raise e
 
@@ -258,7 +258,7 @@ class GeventProcessPoolThriftServer(ServerBase):
                 signal.signal(signal.SIGINT, add_clean_shutdown(sigint_handler))
             else:
                 signal.signal(signal.SIGINT, clean_shutdown)
-        except Exception, e:
+        except Exception as e:
             self._logger.exception(e)
             raise e
 

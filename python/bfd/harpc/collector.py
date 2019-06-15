@@ -87,7 +87,7 @@ class StatisticsCollector(object):
                     self._zkclient.create(self._path, ephemeral=True)
                 self._zkclient.set(self._path, json.dumps(self._info))
                 self._last_update_time = current_timestamp
-            except Exception, e:
+            except Exception as e:
                 self._logger.exception(e)
 
     def start(self):

@@ -199,7 +199,7 @@ class HARPC(core.ZKWrap):
             self.resource[service] = {self.zk_servers: {}, self.zk_clients: {}, "acl": True}
             self.lock.release()
             return (True,"创建成功,请刷新页面查看结果")
-        except Exception, e:
+        except Exception as e:
             logger.error('manage.create_service:' + getExceptionDesc(e))
             return (False, getExceptionDesc(e))
 
@@ -225,7 +225,7 @@ class HARPC(core.ZKWrap):
             else:
                 logger.error('manage.create_service:' + SafeString(result))
                 return (False,"service节点创建成功,但servers节点创建失败！")
-        except Exception, e:
+        except Exception as e:
             logger.error('manage.create_service:' + getExceptionDesc(e))
             return (False, getExceptionDesc(e))
 
@@ -245,7 +245,7 @@ class HARPC(core.ZKWrap):
             self.lock.release()
 
             return (True,)
-        except Exception, e:
+        except Exception as e:
             logger.error('manage.create_servers:' + getExceptionDesc(e))
             return (False, getExceptionDesc(e))
 
@@ -267,7 +267,7 @@ class HARPC(core.ZKWrap):
 
 
             return (True,)
-        except Exception, e:
+        except Exception as e:
             logger.error('manage.delete_service:' + getExceptionDesc(e))
             return (False, getExceptionDesc(e))
 
@@ -287,7 +287,7 @@ class HARPC(core.ZKWrap):
             self.lock.release()
 
             return (True,)
-        except Exception, e:
+        except Exception as e:
             logger.error('manage.delect_servers:' + getExceptionDesc(e))
             return (False, getExceptionDesc(e))
 

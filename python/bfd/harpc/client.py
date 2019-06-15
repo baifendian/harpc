@@ -107,7 +107,7 @@ class Client(object):
                         self._client_pool_map[server_node] = ConnectionPool(server_node, self._client_cls, self.config)
                 else:
                     raise AttributeError("server address is invalid!")
-        except Exception, e:
+        except Exception as e:
             self._logger.exception(e)
             raise e
 
@@ -128,11 +128,10 @@ class Client(object):
                                "retry": self._retries, "ip": local_ip, "service": self._service_name,
                                "monitor": self._monitor, "interval": interval,
                                "loadbalance": self._balance_path}
-
-                    self._zkclient.set(path, json.dumps(self.client_info))
+                    self._zkclient.set(path, bytes(json.dumps(self.client_info), 'utf-8'))
                     self._client_node_name = path[path.rindex("/") + 1:]
                 break
-            except Exception, e:
+            except Exception as e:
                 self._logger.exception(e)
                 time.sleep(1)
 
@@ -144,9 +143,9 @@ class Client(object):
             try:
                 if not self._zkclient.exists(client_node_path):
                     self._zkclient.create(client_node_path, ephemeral=True, sequence=False)
-                    self._zkclient.set(client_node_path, json.dumps(self.client_info))
+                    self._zkclient.set(client_node_path, bytes(json.dumps(self.client_info), 'utf-8'))
                 break
-            except Exception, e:
+            except Exception as e:
                 self._logger.exception(e)
                 time.sleep(1)
 
@@ -170,7 +169,7 @@ class Client(object):
         # create proxy and inject all methods defined in the proxy class
         iface = self._client_cls.__bases__[0]
         proxy = iface()
-        for m in inspect.getmembers(iface, predicate=inspect.ismethod):
+        for m in inspect.getmembers(iface, predicate=inspect.isfunction):
             setattr(proxy, m[0], self._create_method_proxy(m[0]))
         return proxy
 
@@ -193,7 +192,7 @@ class Client(object):
             try:
                 client_pool = self._client_pool_map.get(server_node)
                 conn = client_pool.get_connection()
-            except Exception, e:
+            except Exception as e:
                 self._logger.warn("Get connection failed! msg:%s" % e)
                 if retry == self._retries - 1:
                     self._logger.exception(e)
@@ -207,7 +206,7 @@ class Client(object):
                 client_pool.return_connection(conn)
                 # self._logger.debug("RPC Method Call:%s Server:%s" % (method, server_node))
                 return result
-            except socket.timeout, e:
+            except socket.timeout as e:
                 # timeout
                 self._loadbalancer.request_result(server_node, "TIMEOUT", (time.time() - start))
                 client_pool.release_connection(conn)
@@ -215,7 +214,7 @@ class Client(object):
                 if retry == self._retries - 1:
                     self._logger.exception(e)
                     raise RpcException("Connection request timeout!")
-            except Exception, e:
+            except Exception as e:
                 # data exceptions, return connection     broken connection, release it
                 self._loadbalancer.request_result(server_node, "FAILED", (time.time() - start))
                 if isinstance(e, socket.error) or isinstance(e, TTransport.TTransportException):
