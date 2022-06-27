@@ -41,7 +41,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<thrift.version>0.9.2</thrift.version>
+		<thrift.version>0.14.0</thrift.version>
 		<avro.version>1.7.7</avro.version>
 	</properties>
 
